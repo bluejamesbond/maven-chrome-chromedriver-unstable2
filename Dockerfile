@@ -1,28 +1,57 @@
 FROM maven:3.3.9-jdk-8
 
-# Google Chrome
+ENV DEBIAN_FRONTEND noninteractive
+ENV DEBCONF_NONINTERACTIVE_SEEN true
 
-RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
-	&& echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
-	&& apt-get update -qqy \
-	&& apt-get -qqy install google-chrome-stable \
-	&& rm /etc/apt/sources.list.d/google-chrome.list \
-	&& rm -rf /var/lib/apt/lists/* /var/cache/apt/* \
-	&& sed -i 's/"$HERE\/chrome"/"$HERE\/chrome" --no-sandbox/g' /opt/google/chrome/google-chrome
+# Set timezone
+RUN echo "US/Eastern" > /etc/timezone
+RUN dpkg-reconfigure --frontend noninteractive tzdata
 
-# ChromeDriver
+# Create a default user
+RUN useradd automation --shell /bin/bash --create-home
 
-ARG CHROME_DRIVER_VERSION=2.25
-RUN wget --no-verbose -O /tmp/chromedriver_linux64.zip https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip \
-	&& rm -rf /opt/chromedriver \
-	&& unzip /tmp/chromedriver_linux64.zip -d /opt \
-	&& rm /tmp/chromedriver_linux64.zip \
-	&& mv /opt/chromedriver /opt/chromedriver-$CHROME_DRIVER_VERSION \
-	&& chmod 755 /opt/chromedriver-$CHROME_DRIVER_VERSION \
-	&& ln -fs /opt/chromedriver-$CHROME_DRIVER_VERSION /usr/bin/chromedriver
+# Update the repositories
+# Install utilities
+# Install XVFB and TinyWM
+# Install fonts
+# Install Python
+RUN apt-get -yqq update
+RUN apt-get -yqq install curl unzip
+RUN apt-get -yqq install xvfb tinywm
+RUN apt-get -yqq install fonts-ipafont-gothic xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic
+RUN apt-get -yqq install python
+RUN rm -rf /var/lib/apt/lists/*
 
-# Xvfb
+# Install Chrome WebDriver
+RUN CHROMEDRIVER_VERSION=`curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE` && \
+    mkdir -p /opt/chromedriver-$CHROMEDRIVER_VERSION && \
+    curl -sS -o /tmp/chromedriver_linux64.zip http://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip && \
+    unzip -qq /tmp/chromedriver_linux64.zip -d /opt/chromedriver-$CHROMEDRIVER_VERSION && \
+    rm /tmp/chromedriver_linux64.zip && \
+    chmod +x /opt/chromedriver-$CHROMEDRIVER_VERSION/chromedriver && \
+    ln -fs /opt/chromedriver-$CHROMEDRIVER_VERSION/chromedriver /usr/local/bin/chromedriver
 
-RUN apt-get update -qqy \
-	&& apt-get -qqy install xvfb \
-	&& rm -rf /var/lib/apt/lists/* /var/cache/apt/*
+# Install Google Chrome
+RUN curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
+RUN apt-get -yqq update
+RUN apt-get -yqq install google-chrome-stable
+RUN rm -rf /var/lib/apt/lists/*
+
+# Install Firefox
+RUN curl http://mozilla.debian.net/archive.asc | apt-key add - 
+RUN echo "deb http://mozilla.debian.net/ jessie-backports firefox-release" >> /etc/apt/sources.list.d/debian-mozilla.list
+RUN apt-get -yqq update
+RUN apt-get -yqq install firefox
+RUN rm -rf /var/lib/apt/lists/*
+
+# Install GeckoDriver
+RUN curl -L https://github.com/mozilla/geckodriver/releases/download/v0.16.1/geckodriver-v0.16.1-linux64.tar.gz | tar xz -C /usr/local/bin
+
+# Verify
+RUN firefox --version
+RUN google-chrome --version
+RUN geckodriver --version
+RUN chromedriver --version
+
+EXPOSE 4444
