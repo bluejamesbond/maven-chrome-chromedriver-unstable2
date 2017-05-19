@@ -3,6 +3,9 @@ FROM ubuntu
 ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NONINTERACTIVE_SEEN true
 
+#Install tzdata
+RUN apt-get install tzdata
+
 # Set timezone
 RUN echo "US/Pacific" > /etc/timezone
 RUN dpkg-reconfigure --frontend noninteractive tzdata
