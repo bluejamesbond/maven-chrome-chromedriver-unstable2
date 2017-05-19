@@ -1,10 +1,10 @@
-FROM maven:3.3.9-jdk-8
+FROM ubuntu
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NONINTERACTIVE_SEEN true
 
 # Set timezone
-RUN echo "US/Eastern" > /etc/timezone
+RUN echo "US/Pacific" > /etc/timezone
 RUN dpkg-reconfigure --frontend noninteractive tzdata
 
 # Create a default user
@@ -19,7 +19,7 @@ RUN apt-get -yqq update
 RUN apt-get -yqq install curl unzip
 RUN apt-get -yqq install xvfb tinywm
 RUN apt-get -yqq install fonts-ipafont-gothic xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic
-RUN apt-get -yqq install python
+# RUN apt-get -yqq install python
 RUN rm -rf /var/lib/apt/lists/*
 
 # RUN dpkg-reconfigure locales
@@ -44,11 +44,25 @@ RUN apt-get -yqq install google-chrome-stable
 RUN rm -rf /var/lib/apt/lists/*
 
 # Install Firefox
-RUN curl http://mozilla.debian.net/archive.asc | apt-key add - 
-RUN echo "deb http://mozilla.debian.net/ jessie-backports firefox-release" >> /etc/apt/sources.list.d/debian-mozilla.list
-RUN apt-get -yqq update
 RUN apt-get -yqq install firefox
-RUN rm -rf /var/lib/apt/lists/*
+
+#Install Maven
+RUN apt-get -yqq install maven
+
+#Install apt tools
+RUN apt-get install software-properties-common python-software-properties
+
+#Install Oracle Java 8
+RUN \
+  echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
+  add-apt-repository -y ppa:webupd8team/java && \
+  apt-get update && \
+  apt-get install -y oracle-java8-installer && \
+  rm -rf /var/lib/apt/lists/* && \
+  rm -rf /var/cache/oracle-jdk8-installer
+
+# Define commonly used JAVA_HOME variable
+ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 
 # Install GeckoDriver
 RUN curl -L https://github.com/mozilla/geckodriver/releases/download/v0.16.1/geckodriver-v0.16.1-linux64.tar.gz | tar xz -C /usr/local/bin
