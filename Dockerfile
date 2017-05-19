@@ -21,6 +21,10 @@ RUN apt-get -yqq install xvfb tinywm
 RUN apt-get -yqq install fonts-ipafont-gothic xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic
 RUN apt-get -yqq install python
 RUN rm -rf /var/lib/apt/lists/*
+RUN dpkg-reconfigure locales
+
+RUN mkdir -p /run/user
+RUN chmod -R 777 /run/user/
 
 # Install Chrome WebDriver
 RUN CHROMEDRIVER_VERSION=`curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE` && \
