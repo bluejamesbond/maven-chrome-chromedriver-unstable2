@@ -54,7 +54,7 @@ RUN apt-get -yqq install firefox
 RUN apt-get -yqq install maven
 
 #Install apt tools
-RUN apt-get install software-properties-common python-software-properties
+RUN apt-get -yqq install software-properties-common python-software-properties
 
 #Install Oracle Java 8
 RUN \
