@@ -5,7 +5,10 @@ ENV DEBCONF_NONINTERACTIVE_SEEN true
 
 RUN apt-get -yqq update
 #Install tzdata
-RUN apt-get install tzdata
+RUN apt-get -yqq install tzdata
+
+#Install killall
+RUN apt-get -yqq install psmisc
 
 # Set timezone
 RUN echo "US/Pacific" > /etc/timezone
