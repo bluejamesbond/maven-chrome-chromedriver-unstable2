@@ -10,6 +10,9 @@ RUN apt-get -yqq install tzdata
 #Install killall
 RUN apt-get -yqq install psmisc
 
+#Install alsa
+RUN apt-get -yqq install alsa
+
 # Set timezone
 RUN echo "US/Pacific" > /etc/timezone
 RUN dpkg-reconfigure --frontend noninteractive tzdata
