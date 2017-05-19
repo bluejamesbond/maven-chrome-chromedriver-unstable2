@@ -24,7 +24,7 @@ RUN apt-get -yqq install curl unzip
 RUN apt-get -yqq install xvfb tinywm
 RUN apt-get -yqq install fonts-ipafont-gothic xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic
 # RUN apt-get -yqq install python
-RUN rm -rf /var/lib/apt/lists/*
+# RUN rm -rf /var/lib/apt/lists/*
 
 # RUN dpkg-reconfigure locales
 
@@ -62,7 +62,6 @@ RUN \
   add-apt-repository -y ppa:webupd8team/java && \
   apt-get update && \
   apt-get install -y oracle-java8-installer && \
-  rm -rf /var/lib/apt/lists/* && \
   rm -rf /var/cache/oracle-jdk8-installer
 
 # Define commonly used JAVA_HOME variable
