@@ -26,7 +26,9 @@ RUN apt-get -yqq install fonts-ipafont-gothic xfonts-100dpi xfonts-75dpi xfonts-
 # RUN apt-get -yqq install python
 # RUN rm -rf /var/lib/apt/lists/*
 
-# RUN dpkg-reconfigure locales
+RUN apt-get -yqq install language-pack-en-base
+RUN dpkg-reconfigure locales
+RUN export LC_ALL="en_US.UTF-8"
 
 RUN mkdir -p /run/user
 RUN chmod -R 777 /run/user/
