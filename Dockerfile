@@ -59,4 +59,8 @@ RUN google-chrome --version
 RUN geckodriver --version
 RUN chromedriver --version
 
+RUN whoami
+RUN su automation
+RUN whoami
+
 EXPOSE 4444
