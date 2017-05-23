@@ -10,13 +10,9 @@ RUN dpkg-reconfigure --frontend noninteractive tzdata
 # Create a default user
 RUN useradd automation --shell /bin/bash --create-home
 
-# Update the repositories
-# Install utilities
-# Install XVFB
-# Install fonts
-# Install Python
+# Install basics
 RUN apt-get -yqq update
-RUN apt-get -yqq install curl unzip wget xvfb
+RUN apt-get -yqq install curl unzip wget xvfb alsa-utils
 RUN apt-get -yqq install fonts-ipafont-gothic xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic
 RUN rm -rf /var/lib/apt/lists/*
 
