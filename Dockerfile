@@ -44,6 +44,9 @@ RUN apt-get -yqq update
 RUN apt-get -yqq install firefox
 RUN rm -rf /var/lib/apt/lists/*
 
+# Install GeckoDriver
+RUN curl -L https://github.com/mozilla/geckodriver/releases/download/v0.16.1/geckodriver-v0.16.1-linux64.tar.gz | tar xz -C /usr/local/bin
+
 # Install Opera
 ENV CHANNEL stable
 ENV OPERA_CHANNEL opera-$CHANNEL
@@ -55,8 +58,11 @@ RUN apt-get update
 RUN apt-get install -y ${OPERA_CHANNEL} --no-install-recommends
 RUN rm -rf /var/lib/apt/lists/*
     
-# Install GeckoDriver
-RUN curl -L https://github.com/mozilla/geckodriver/releases/download/v0.16.1/geckodriver-v0.16.1-linux64.tar.gz | tar xz -C /usr/local/bin
+# Install OperaDriver
+RUN curl -L https://github.com/operasoftware/operachromiumdriver/releases/download/v.2.27/operadriver_linux64.zip > operadriver.zip
+RUN unzip -p operadriver.zip */operadriver > /usr/local/bin/operadriver
+RUN chmod +x /usr/local/bin/operadriver
+RUN rm operadriver.zip
 
 # Verify
 RUN firefox --version
@@ -64,9 +70,6 @@ RUN google-chrome --version
 RUN geckodriver --version
 RUN chromedriver --version
 RUN opera --version
-
-RUN whoami
-RUN su automation
-RUN whoami
+RUN operadriver --version
 
 EXPOSE 4444
