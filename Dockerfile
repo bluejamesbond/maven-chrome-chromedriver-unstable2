@@ -53,8 +53,8 @@ ENV CHANNEL stable
 ENV OPERA_CHANNEL opera-$CHANNEL
 RUN apt-get update 
 RUN apt-get install -y ca-certificates wget
-RUN echo "deb http://deb.opera.com/${OPERA_CHANNEL}/ stable non-free" > /etc/apt/sources.list.d/opera.list \
-RUN wget -qO- http://deb.opera.com/archive.key | apt-key add - \
+RUN echo "deb http://deb.opera.com/${OPERA_CHANNEL}/ stable non-free" > /etc/apt/sources.list.d/opera.list
+RUN wget -qO- http://deb.opera.com/archive.key | apt-key add -
 RUN apt-get update
 RUN apt-get install -y ${OPERA_CHANNEL} --no-install-recommends
 RUN rm -rf /var/lib/apt/lists/*
