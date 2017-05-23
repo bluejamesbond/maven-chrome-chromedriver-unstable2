@@ -12,14 +12,12 @@ RUN useradd automation --shell /bin/bash --create-home
 
 # Update the repositories
 # Install utilities
-# Install XVFB and TinyWM
+# Install XVFB
 # Install fonts
 # Install Python
 RUN apt-get -yqq update
-RUN apt-get -yqq install curl unzip
-RUN apt-get -yqq install xvfb tinywm
+RUN apt-get -yqq install curl unzip wget
 RUN apt-get -yqq install fonts-ipafont-gothic xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic
-RUN apt-get -yqq install python
 RUN rm -rf /var/lib/apt/lists/*
 
 # RUN dpkg-reconfigure locales
@@ -50,6 +48,17 @@ RUN apt-get -yqq update
 RUN apt-get -yqq install firefox
 RUN rm -rf /var/lib/apt/lists/*
 
+# Install Opera
+ENV CHANNEL stable
+ENV OPERA_CHANNEL opera-$CHANNEL
+RUN apt-get update 
+RUN apt-get install -y ca-certificates wget
+RUN echo "deb http://deb.opera.com/${OPERA_CHANNEL}/ stable non-free" > /etc/apt/sources.list.d/opera.list \
+RUN wget -qO- http://deb.opera.com/archive.key | apt-key add - \
+RUN apt-get update
+RUN apt-get install -y ${OPERA_CHANNEL} --no-install-recommends
+RUN rm -rf /var/lib/apt/lists/*
+    
 # Install GeckoDriver
 RUN curl -L https://github.com/mozilla/geckodriver/releases/download/v0.16.1/geckodriver-v0.16.1-linux64.tar.gz | tar xz -C /usr/local/bin
 
