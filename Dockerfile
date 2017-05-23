@@ -67,6 +67,7 @@ RUN firefox --version
 RUN google-chrome --version
 RUN geckodriver --version
 RUN chromedriver --version
+RUN opera --version
 
 RUN whoami
 RUN su automation
