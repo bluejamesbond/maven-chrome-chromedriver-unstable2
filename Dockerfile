@@ -4,7 +4,7 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NONINTERACTIVE_SEEN true
 
 # Set timezone
-RUN echo "US/Eastern" > /etc/timezone
+RUN echo "US/Pacific" > /etc/timezone
 RUN dpkg-reconfigure --frontend noninteractive tzdata
 
 # Create a default user
@@ -14,7 +14,6 @@ RUN useradd automation --shell /bin/bash --create-home
 RUN apt-get -yqq update
 RUN apt-get -yqq install curl unzip wget xvfb alsa-utils
 RUN apt-get -yqq install fonts-ipafont-gothic xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic
-RUN rm -rf /var/lib/apt/lists/*
 
 # RUN dpkg-reconfigure locales
 
@@ -35,14 +34,12 @@ RUN curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-ke
 RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
 RUN apt-get -yqq update
 RUN apt-get -yqq install google-chrome-stable
-RUN rm -rf /var/lib/apt/lists/*
 
 # Install Firefox
 RUN curl http://mozilla.debian.net/archive.asc | apt-key add - 
 RUN echo "deb http://mozilla.debian.net/ jessie-backports firefox-release" >> /etc/apt/sources.list.d/debian-mozilla.list
 RUN apt-get -yqq update
 RUN apt-get -yqq install firefox
-RUN rm -rf /var/lib/apt/lists/*
 
 # Install GeckoDriver
 RUN curl -L https://github.com/mozilla/geckodriver/releases/download/v0.16.1/geckodriver-v0.16.1-linux64.tar.gz | tar xz -C /usr/local/bin
@@ -56,7 +53,6 @@ RUN echo "deb http://deb.opera.com/${OPERA_CHANNEL}/ stable non-free" > /etc/apt
 RUN wget -qO- http://deb.opera.com/archive.key | apt-key add -
 RUN apt-get update
 RUN apt-get install -y ${OPERA_CHANNEL} --no-install-recommends
-RUN rm -rf /var/lib/apt/lists/*
     
 # Install OperaDriver
 RUN curl -L https://github.com/operasoftware/operachromiumdriver/releases/download/v.2.27/operadriver_linux64.zip > operadriver.zip
