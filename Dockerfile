@@ -77,7 +77,5 @@ EXPOSE 4444
 
 RUN mkdir automation
 RUN chmod -R 777 automation
-RUN cd automation
-RUN su automation
 
 WORKDIR automation
