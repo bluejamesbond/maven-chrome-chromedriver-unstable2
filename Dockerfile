@@ -75,4 +75,4 @@ ENV CHROMEDRIVER_URL_BASE ''
 
 EXPOSE 4444
 
-RUN chmod -R 777 ./
+WORKDIR /home/automation
