@@ -75,7 +75,4 @@ ENV CHROMEDRIVER_URL_BASE ''
 
 EXPOSE 4444
 
-RUN mkdir automation
-RUN chmod -R 777 automation
-
-WORKDIR automation
+RUN chmod -R 777 ./
