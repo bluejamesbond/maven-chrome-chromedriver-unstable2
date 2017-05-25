@@ -12,7 +12,7 @@ RUN useradd automation --shell /bin/bash --create-home
 
 # Install basics
 RUN apt-get -yqq update
-RUN apt-get -yqq install curl unzip wget xvfb tinywm alsa-utils upower
+RUN apt-get -yqq install curl unzip wget xvfb tinywm alsa-utils upower gradle # gradle includes groovy
 RUN apt-get -yqq install fonts-ipafont-gothic xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic
 
 # Browser requirement
@@ -73,6 +73,8 @@ ENV CHROMEDRIVER_PORT 4444
 ENV CHROMEDRIVER_WHITELISTED_IPS "127.0.0.1"
 ENV CHROMEDRIVER_URL_BASE ''
 ENV SHELL "/bin/bash"
+ENV GROOVY_HOME "/usr/bin/groovy"
+ENV JAVA_HOME "/usr/bin/java"
 
 EXPOSE 4444
 
