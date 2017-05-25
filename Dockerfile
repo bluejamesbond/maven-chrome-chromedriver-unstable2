@@ -12,7 +12,7 @@ RUN useradd automation --shell /bin/bash --create-home
 
 # Install basics
 RUN apt-get -yqq update
-RUN apt-get -yqq install curl unzip wget xvfb tinywm alsa-utils upower gradle
+RUN apt-get -yqq install curl unzip wget xvfb tinywm alsa-utils upower gradle # gradle includes groovy
 RUN apt-get -yqq install fonts-ipafont-gothic xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic
 
 # Browser requirement
@@ -51,7 +51,7 @@ RUN apt-get install -y ca-certificates wget
 RUN echo "deb http://deb.opera.com/${OPERA_CHANNEL}/ stable non-free" > /etc/apt/sources.list.d/opera.list
 RUN wget -qO- http://deb.opera.com/archive.key | apt-key add -
 RUN apt-get update
-# RUN apt-get install -y ${OPERA_CHANNEL} --no-install-recommends
+RUN apt-get install -y ${OPERA_CHANNEL} --no-install-recommends
     
 # Install OperaDriver
 RUN curl -L https://github.com/operasoftware/operachromiumdriver/releases/download/v.2.27/operadriver_linux64.zip > operadriver.zip
@@ -65,7 +65,9 @@ RUN google-chrome --version
 RUN geckodriver --version
 RUN chromedriver --version
 RUN opera --version
-# RUN operadriver --version
+RUN operadriver --version
+RUN gradle --version
+RUN groovy --version
 
 ENV DISPLAY :56
 ENV SCREEN_GEOMETRY "1920x1200x24"
