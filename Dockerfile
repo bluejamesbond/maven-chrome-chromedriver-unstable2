@@ -64,6 +64,7 @@ RUN curl -sL https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh
 RUN bash install_nvm.sh
 RUN nvm install 6.10.3
 RUN nvm alias default 6.10.3
+RUN npm install -g https://github.com/bluejamesbond/benchmark-octane
 
 # Verify
 RUN firefox --version
