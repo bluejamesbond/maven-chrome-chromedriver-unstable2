@@ -12,7 +12,7 @@ RUN useradd automation --shell /bin/bash --create-home
 
 # Install basics
 RUN apt-get -yqq update
-RUN apt-get -yqq install curl unzip wget xvfb tinywm alsa-utils upower build-essential libssl-dev
+RUN apt-get -yqq install curl unzip wget xvfb tinywm alsa-utils upower build-essential libssl-dev nodejs npm
 RUN apt-get -yqq install fonts-ipafont-gothic xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic
 
 # Browser requirement
@@ -58,11 +58,6 @@ RUN curl -L https://github.com/operasoftware/operachromiumdriver/releases/downlo
 RUN unzip -p operadriver.zip */operadriver > /usr/local/bin/operadriver
 RUN chmod +x /usr/local/bin/operadriver
 RUN rm operadriver.zip
-
-# Install Nodejs
-RUN curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
-RUN apt-get update
-RUN apt-get install -yqq nodejs npm
 
 # Install Octane
 RUN npm install -g https://github.com/bluejamesbond/benchmark-octane
