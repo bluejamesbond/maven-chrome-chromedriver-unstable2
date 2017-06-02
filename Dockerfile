@@ -80,6 +80,7 @@ RUN geckodriver --version
 RUN chromedriver --version
 RUN opera --version
 RUN operadriver --version
+RUN node --version
 
 ENV DISPLAY :56
 ENV SCREEN_GEOMETRY "1200x1920x24"
