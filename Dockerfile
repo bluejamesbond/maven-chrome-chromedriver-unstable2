@@ -60,7 +60,7 @@ RUN chmod +x /usr/local/bin/operadriver
 RUN rm operadriver.zip
 
 # Install Node
-ENV NVM_DIR /usr/local/nvm
+ENV NVM_DIR /root
 ENV NODE_VERSION 6.10.3
 RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.26.0/install.sh | bash \
     && source $NVM_DIR/nvm.sh \
