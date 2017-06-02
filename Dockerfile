@@ -12,7 +12,7 @@ RUN useradd automation --shell /bin/bash --create-home
 
 # Install basics
 RUN apt-get -yqq update
-RUN apt-get -yqq install curl unzip wget xvfb tinywm alsa-utils upower build-essential libssl-dev
+RUN apt-get -yqq install curl unzip wget xvfb tinywm alsa-utils upower build-essential libssl-dev nodejs
 RUN apt-get -yqq install fonts-ipafont-gothic xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic
 
 # Browser requirement
@@ -58,17 +58,6 @@ RUN curl -L https://github.com/operasoftware/operachromiumdriver/releases/downlo
 RUN unzip -p operadriver.zip */operadriver > /usr/local/bin/operadriver
 RUN chmod +x /usr/local/bin/operadriver
 RUN rm operadriver.zip
-
-# Install Node
-ENV NVM_DIR /usr/local/nvm
-ENV NODE_VERSION 6.10.3
-RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.26.0/install.sh | bash \
-    && sh ~/.bashrc \
-    && nvm install $NODE_VERSION \
-    && nvm alias default $NODE_VERSION \
-    && nvm use default
-ENV NODE_PATH $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
-ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
 # Install Octane
 RUN npm install -g https://github.com/bluejamesbond/benchmark-octane
