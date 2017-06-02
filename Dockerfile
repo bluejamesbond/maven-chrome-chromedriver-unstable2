@@ -60,10 +60,17 @@ RUN chmod +x /usr/local/bin/operadriver
 RUN rm operadriver.zip
 
 # Install Node
-RUN curl -sL https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh -o install_nvm.sh
-RUN bash install_nvm.sh
-RUN nvm install 6.10.3
-RUN nvm alias default 6.10.3
+ENV NVM_DIR /usr/local/nvm
+ENV NODE_VERSION 6.10.3
+RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.26.0/install.sh | bash \
+    && source $NVM_DIR/nvm.sh \
+    && nvm install $NODE_VERSION \
+    && nvm alias default $NODE_VERSION \
+    && nvm use default
+ENV NODE_PATH $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
+ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+
+# Install Octane
 RUN npm install -g https://github.com/bluejamesbond/benchmark-octane
 
 # Verify
