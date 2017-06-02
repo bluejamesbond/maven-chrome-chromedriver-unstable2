@@ -63,7 +63,7 @@ RUN rm operadriver.zip
 ENV NVM_DIR /usr/local/nvm
 ENV NODE_VERSION 6.10.3
 RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.26.0/install.sh | bash \
-    && source ~/.bashrc \
+    && sh ~/.bashrc \
     && nvm install $NODE_VERSION \
     && nvm alias default $NODE_VERSION \
     && nvm use default
