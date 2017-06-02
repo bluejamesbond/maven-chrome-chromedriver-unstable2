@@ -12,7 +12,7 @@ RUN useradd automation --shell /bin/bash --create-home
 
 # Install basics
 RUN apt-get -yqq update
-RUN apt-get -yqq install curl unzip wget xvfb tinywm alsa-utils upower build-essential libssl-dev nodejs npm
+RUN apt-get -yqq install curl unzip wget xvfb tinywm alsa-utils upower build-essential libssl-dev
 RUN apt-get -yqq install fonts-ipafont-gothic xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic
 
 # Browser requirement
@@ -71,8 +71,8 @@ RUN opera --version
 RUN operadriver --version
 RUN node --version
 
-ENV DISPLAY :56
-ENV SCREEN_GEOMETRY "1200x1920x24"
+ENV DBUS_SESSION_BUS_ADDRESS "/dev/null"
+ENV MAVEN_OPTS "-Xmx10240M"
 ENV CHROMEDRIVER_PORT 4444
 ENV CHROMEDRIVER_WHITELISTED_IPS "127.0.0.1"
 ENV CHROMEDRIVER_URL_BASE ''
