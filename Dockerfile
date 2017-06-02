@@ -62,7 +62,7 @@ RUN rm operadriver.zip
 # Install Nodejs
 RUN curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
 RUN apt-get update
-RUN apt-get install -yqq nodejs
+RUN apt-get install -yqq nodejs npm
 
 # Install Octane
 RUN npm install -g https://github.com/bluejamesbond/benchmark-octane
