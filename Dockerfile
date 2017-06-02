@@ -60,7 +60,7 @@ RUN chmod +x /usr/local/bin/operadriver
 RUN rm operadriver.zip
 
 # Install Octane
-RUN npm install -g https://github.com/bluejamesbond/benchmark-octane
+RUN npm install -g benchmark-octane
 
 # Verify
 RUN firefox --version
