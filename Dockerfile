@@ -69,7 +69,7 @@ RUN geckodriver --version
 RUN chromedriver --version
 RUN opera --version
 RUN operadriver --version
-RUN node --version
+# RUN node --version
 
 ENV DBUS_SESSION_BUS_ADDRESS "/dev/null"
 ENV MAVEN_OPTS "-Xmx10240M"
