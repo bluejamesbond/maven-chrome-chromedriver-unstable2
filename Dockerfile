@@ -38,9 +38,9 @@ RUN apt-get -yqq install google-chrome-stable
 
 # Install Firefox
 RUN curl http://mozilla.debian.net/archive.asc | apt-key add - 
-RUN echo "deb http://mozilla.debian.net/ jessie-backports firefox-release" >> /etc/apt/sources.list.d/debian-mozilla.list
+RUN echo "deb http://security.debian.org/ stretch/updates main" >> /etc/apt/sources.list.d/debian-mozilla.list
 RUN apt-get -yqq update
-RUN apt-get -yqq install firefox
+RUN apt-get -yqq install firefox-esr
 
 # Install GeckoDriver
 RUN curl -L https://github.com/mozilla/geckodriver/releases/download/v0.16.1/geckodriver-v0.16.1-linux64.tar.gz | tar xz -C /usr/local/bin
