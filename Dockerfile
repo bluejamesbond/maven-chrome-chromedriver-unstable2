@@ -56,7 +56,7 @@ RUN apt-get update
 RUN apt-get install -y ${OPERA_CHANNEL} --no-install-recommends
     
 # Install OperaDriver
-RUN curl -L https://github.com/operasoftware/operachromiumdriver/releases/download/v.2.27/operadriver_linux64.zip > operadriver.zip
+RUN curl -L https://github.com/operasoftware/operachromiumdriver/releases/download/v.2.29/operadriver_linux64.zip > operadriver.zip
 RUN unzip -p operadriver.zip */operadriver > /usr/local/bin/operadriver
 RUN chmod +x /usr/local/bin/operadriver
 RUN rm operadriver.zip
